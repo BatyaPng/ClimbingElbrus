@@ -4,6 +4,6 @@ module is_even(
     output wire parity
 );
 
-assign parity = ~(num & 1);
+assign parity = ~(num[0] & 1);
 
 endmodule

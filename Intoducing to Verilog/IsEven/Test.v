@@ -12,7 +12,7 @@ is_even is_even_inst(.num(num), .parity(parity));
 initial begin
     $dumpvars;
 
-    num = 32; #1 $display("parity = %d", parity);
+    num = 31; #1 $display("parity = %d", parity);
 end
 
 endmodule

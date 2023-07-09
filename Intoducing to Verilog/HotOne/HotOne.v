@@ -4,6 +4,6 @@ module hot_one(
     output [7:0]res_num
 );
 
-assign res_num = 1 << (src_num - 1);
+assign res_num = 1 << src_num;
 
 endmodule
