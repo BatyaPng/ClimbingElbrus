@@ -14,7 +14,7 @@ reg [capacity + 1]counter = 1;
 initial clk_div = 1;
 
 always @(posedge clk) begin
-    counter = counter + 1;
+    counter += 1;
 
     if (reset) begin
         $display("I'm here 20");
