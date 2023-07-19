@@ -1,7 +1,7 @@
 module clk_div_2n
 #(
     parameter div = 2,
-    parameter capacity = $clog2(div)
+    parameter capacity = $clog2(div) + 1
 )
 (
     input clk, reset,
@@ -9,7 +9,7 @@ module clk_div_2n
     output reg clk_div
 );
 
-reg [capacity + 1]counter;
+reg [capacity]counter;
 
 always @(posedge clk) begin
     counter <= counter + 1;
