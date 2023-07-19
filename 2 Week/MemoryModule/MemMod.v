@@ -3,7 +3,6 @@ module mem_mod
     parameter DATA_WIDTH = 8,
     parameter MAX_ADDR = 1,
     parameter ADDRSIZE = $clog2(MAX_ADDR)
-    // parameter CAPACITY = DATA_WIDTH * MAX_ADDR
 )
 (
     input clk,
@@ -14,7 +13,6 @@ module mem_mod
     output reg [DATA_WIDTH]rd_data
 );
 
-// reg [ADDRSIZE]mcb;
 reg [DATA_WIDTH] mem [MAX_ADDR];
 
 always @(posedge clk) begin
