@@ -19,11 +19,9 @@ reg [DATA_WIDTH] mem [MAX_ADDR];
 
 always @(posedge clk) begin
     if (rd_en) begin
-        $display("Out %d from %d", mem[rd_addr], rd_addr);
         rd_data <= mem[rd_addr];
     end
     else if (wr_en) begin
-        $display("In %d to %d", wr_data, wr_addr);
         mem[wr_addr] <= wr_data;
     end
 end
