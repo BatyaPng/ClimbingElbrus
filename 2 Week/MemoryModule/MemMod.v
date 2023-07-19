@@ -8,9 +8,9 @@ module mem_mod
     input clk,
     input rd_en, wr_en,
     input [ADDRSIZE] rd_addr, wr_addr,
-    input [DATA_WIDTH]wr_data,
+    input [DATA_WIDTH] wr_data,
 
-    output reg [DATA_WIDTH]rd_data
+    output reg [DATA_WIDTH] rd_data
 );
 
 reg [DATA_WIDTH] mem [MAX_ADDR];
