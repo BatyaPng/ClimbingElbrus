@@ -9,15 +9,12 @@ module clk_div_2n
     output reg clk_div
 );
 
-reg [capacity + 1]counter = 1;
-
-initial clk_div = 1;
+reg [capacity + 1]counter;
 
 always @(posedge clk) begin
-    counter += 1;
+    counter <= counter + 1;
 
     if (reset) begin
-        $display("I'm here 20");
         counter <= 1;
         clk_div <= 0;
     end
