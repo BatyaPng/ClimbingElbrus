@@ -16,10 +16,10 @@ reg [8] wr_data;
 wire [8] rd_data;
 
 mem_mod #(8, 4) mem_mod_inst(.clk(clk), 
-                                             .rd_en(rd_en), .wr_en(wr_en), 
-                                             .rd_addr(rd_addr), .wr_addr(wr_addr), 
-                                             .wr_data(wr_data),
-                                             .rd_data(rd_data));
+                             .rd_en(rd_en), .wr_en(wr_en), 
+                             .rd_addr(rd_addr), .wr_addr(wr_addr), 
+                             .wr_data(wr_data),
+                             .rd_data(rd_data));
 
 initial begin
     $dumpvars;
