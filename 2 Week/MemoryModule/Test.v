@@ -46,7 +46,7 @@ initial begin
     //$display("Wrote data: %d",wr_data);
 
     wr_en = 0;
-    rd_en = 1;
+    rd_en = 0;
     rd_addr = 0;
     //$display("Readed data: %d", rd_data);
     #2;
