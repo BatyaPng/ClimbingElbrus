@@ -57,13 +57,11 @@ initial begin
 
     rd_addr = 2;
     //$display("Readed data: %d", rd_data);
-    #2;
 
+#2
     rd_addr = 3;
     //$display("Readed data: %d", rd_data);
-    #2;
-
-    #2 $finish;
+     #100 $finish;
 end
 
 endmodule
