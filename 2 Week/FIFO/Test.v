@@ -1,5 +1,5 @@
 `define DATA_WIDTH 8
-`define FIFO_DEPTH 4
+`define FIFO_DEPTH 8
 `define CAPACITY $clog2(FIFO_DEPTH)
 
 module top();
@@ -29,24 +29,24 @@ initial begin
     #2 reset = 0;
 
     #2 wr_en = 1; 
-     wr_data = 81;
+     wr_data = 0;
     // #2 $display("Wrote data: %d",wr_data);
  
-    #2 wr_data = 99;
+    #2 wr_data = 1;
     // #2 $display("Wrote data: %d",wr_data);
    
-    #2 wr_data = 141;
+    #2 wr_data = 2;
     // #2 $display("Wrote data: %d",wr_data);
    
-    #2 wr_data = 250;
+    #2 wr_data = 3;
     // #2 $display("Wrote data: %d",wr_data);
  
     #2 wr_en = 0;
     #2 rd_en = 1;
     // #2 $display("Readed data: %d", rd_data);
 
-
-    #500 $finish;
+    #10
+    $finish;
 end
 
 endmodule
