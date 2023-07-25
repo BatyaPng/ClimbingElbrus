@@ -10,17 +10,18 @@ module mem_mod
     input [ADDRSIZE] rd_addr, wr_addr,
     input [DATA_WIDTH]wr_data,
 
-    output [DATA_WIDTH]rd_data
+    output reg [DATA_WIDTH]rd_data
 );
 
 reg [DATA_WIDTH] mem [MAX_ADDR];
 
 always @(posedge clk) begin
+    if (rd_en) begin
+        rd_data <= mem[rd_addr];
+    end
     if (wr_en) begin
         mem[wr_addr] <= wr_data;
     end
 end
-
-assign rd_data = rd_en ? mem[rd_addr] : 'bx;
 
 endmodule
