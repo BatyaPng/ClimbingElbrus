@@ -8,7 +8,7 @@ module pls_gen_n
     output impulse
 );
 
-reg [period - 1]counter;
+reg [period - 1] counter;
 
 always @(posedge clk) begin
     if (reset)
