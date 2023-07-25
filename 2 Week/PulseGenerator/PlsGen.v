@@ -17,6 +17,6 @@ always @(posedge clk) begin
         counter <= (counter < period - 1) ? counter + 1 : 0;
 end
 
-assign impulse = (counter == period - 1) ? 1 : 0;
+assign impulse = (counter == period - 1);
 
 endmodule
