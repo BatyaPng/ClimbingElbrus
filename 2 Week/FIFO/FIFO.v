@@ -18,24 +18,14 @@ reg [DATA_WIDTH] queue [FIFO_DEPTH];
 reg [CAPACITY] head;
 reg [CAPACITY] tail;
 reg [CAPACITY] counter;
-// reg eq;
 
 always @(posedge clk) begin
-    $display("----------------------------");
-    $display("counter  - %d", counter);
-    $display("rd_val   - %d; wr_ready - %d", rd_val, wr_ready);
-    $display("rd_en    - %d; wr_en    - %d", rd_en, wr_en);
-    $display("head     - %d; tail     - %d", head, tail);
-    $display("----------------------------");
     if (reset) begin
         head <= 0;
         tail <= 0;
         counter <= 0;
-        $display("I'm here 22");    
     end
     else if (rd_en & rd_val) begin
-        $display("Out[%d] %d", head, queue[head],);
-
         rd_data <= queue[head];
         
         if (head == FIFO_DEPTH - 1) begin
@@ -48,8 +38,6 @@ always @(posedge clk) begin
         counter <= counter - 1; 
     end
     else if (wr_en & wr_ready) begin
-        $display("In[%d] %d", tail, wr_data);
-
         queue[tail] <= wr_data;
 
         if (tail == FIFO_DEPTH - 1) begin
@@ -62,18 +50,6 @@ always @(posedge clk) begin
         counter <= counter + 1;
     end
 end
-
-// always @(posedge clk) begin
-//     if (reset) begin
-//         eq <= 0;
-//     end
-//     else if (head == tail) begin
-//         eq <= 1;
-//     end
-//     else if (eq == 1 & head < tail) begin
-//         eq <= 0;
-//     end
-// end
 
 assign rd_val = (counter != 0);
 assign wr_ready = (counter < FIFO_DEPTH);
