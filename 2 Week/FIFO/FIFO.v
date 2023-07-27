@@ -14,44 +14,68 @@ module fifo
 );
 
 reg [DATA_WIDTH] queue [FIFO_DEPTH];
+
 reg [CAPACITY] head;
 reg [CAPACITY] tail;
-// reg state_system;
-wire state_system;
+reg [CAPACITY] counter;
+// reg eq;
 
 always @(posedge clk) begin
+    $display("----------------------------");
+    $display("counter  - %d", counter);
     $display("rd_val   - %d; wr_ready - %d", rd_val, wr_ready);
     $display("rd_en    - %d; wr_en    - %d", rd_en, wr_en);
-    $display("counter %d", counter);
+    $display("head     - %d; tail     - %d", head, tail);
+    $display("----------------------------");
     if (reset) begin
         head <= 0;
         tail <= 0;
+        counter <= 0;
         $display("I'm here 22");    
     end
     else if (rd_en & rd_val) begin
         $display("Out[%d] %d", head, queue[head],);
+
         rd_data <= queue[head];
-        head <= head + 1; 
+        
+        if (head == FIFO_DEPTH - 1) begin
+            head <= 0;
+        end
+        else begin
+            head <= head + 1;            
+        end
+
+        counter <= counter - 1; 
     end
     else if (wr_en & wr_ready) begin
         $display("In[%d] %d", tail, wr_data);
-        queue[tail + 1] <= wr_data;
-        tail <= tail + 1;
+
+        queue[tail] <= wr_data;
+
+        if (tail == FIFO_DEPTH - 1) begin
+            tail <= 0;
+        end
+        else begin
+            tail <= tail + 1;            
+        end
+
+        counter <= counter + 1;
     end
 end
 
 // always @(posedge clk) begin
 //     if (reset) begin
-//         state_system <= 1;
+//         eq <= 0;
 //     end
-//     else if (tail < head) begin
-//         state_system <= 0;
+//     else if (head == tail) begin
+//         eq <= 1;
+//     end
+//     else if (eq == 1 & head < tail) begin
+//         eq <= 0;
 //     end
 // end
 
-assign state_system = (tail < head) ? 0 : 1;
-
-assign rd_val = (~((tail > head) ^ state_system)) ? 1 : 0;
-assign wr_ready = ((tail - head != FIFO_DEPTH - 1) & (tail - head != 1) ? 1 : 0;
+assign rd_val = (counter != 0);
+assign wr_ready = (counter < FIFO_DEPTH);
     
 endmodule

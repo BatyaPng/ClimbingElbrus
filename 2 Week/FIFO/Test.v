@@ -1,6 +1,6 @@
 `define DATA_WIDTH 8
-`define FIFO_DEPTH 8
-`define CAPACITY $clog2(FIFO_DEPTH)
+`define FIFO_DEPTH 4
+`define CAPACITY $clog2(`FIFO_DEPTH)
 
 module top();
 
