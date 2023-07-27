@@ -15,7 +15,7 @@ always begin
     #1 clk = ~clk;
 end
 
-fifo #(`DATA_WIDTH, `FIFO_DEPTH) fifo_inst(
+fifo_shift #(`DATA_WIDTH, `FIFO_DEPTH) fifo_inst(
                .clk(clk), .reset(reset),
                .rd_en(rd_en), .wr_en(wr_en),
                .wr_data(wr_data),
