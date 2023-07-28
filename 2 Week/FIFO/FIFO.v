@@ -7,17 +7,17 @@ module fifo
 (
     input clk, reset,
     input rd_en, wr_en,
-    input [DATA_WIDTH] wr_data,
+    input [DATA_WIDTH - 1:0] wr_data,
 
     output rd_val, wr_ready,
-    output reg [DATA_WIDTH] rd_data
+    output reg [DATA_WIDTH - 1:0] rd_data
 );
 
-reg [DATA_WIDTH] queue [FIFO_DEPTH];
+reg [DATA_WIDTH - 1:0] queue [FIFO_DEPTH - 1:0];
 
-reg [CAPACITY] head;
-reg [CAPACITY] tail;
-reg [CAPACITY] counter;
+reg [CAPACITY - 1:0] head;
+reg [CAPACITY - 1:0] tail;
+reg [CAPACITY - 1:0] counter;
 
 always @(posedge clk) begin
     if (reset) begin

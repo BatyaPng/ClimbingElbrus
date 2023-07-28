@@ -7,13 +7,13 @@ module mem_mod
 (
     input clk,
     input rd_en, wr_en,
-    input [ADDRSIZE] rd_addr, wr_addr,
-    input [DATA_WIDTH]wr_data,
+    input [ADDRSIZE - 1:0] rd_addr, wr_addr,
+    input [DATA_WIDTH - 1:0]wr_data,
 
-    output reg [DATA_WIDTH]rd_data
+    output reg [DATA_WIDTH - 1:0]rd_data
 );
 
-reg [DATA_WIDTH] mem [MAX_ADDR];
+reg [DATA_WIDTH - 1:0] mem [MAX_ADDR - 1:0];
 
 always @(posedge clk) begin
     if (rd_en) begin
