@@ -6,16 +6,16 @@ module top();
 
 reg clk = 0, reset = 1;
 reg rd_en = 0, wr_en = 0;
-reg [`DATA_WIDTH] wr_data;
+reg [`DATA_WIDTH - 1:0] wr_data;
 
 wire rd_val, wr_ready;
-wire [`DATA_WIDTH] rd_data;
+wire [`DATA_WIDTH - 1:0] rd_data;
 
 always begin
     #1 clk = ~clk;
 end
 
-fifo_shift #(`DATA_WIDTH, `FIFO_DEPTH) fifo_inst(
+fifo #(`DATA_WIDTH, `FIFO_DEPTH) fifo_inst(
                .clk(clk), .reset(reset),
                .rd_en(rd_en), .wr_en(wr_en),
                .wr_data(wr_data),
