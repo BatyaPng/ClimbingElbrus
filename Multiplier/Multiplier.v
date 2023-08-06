@@ -8,4 +8,4 @@ module muliplier (
     
 
 
-endmodule
+endmodule   
