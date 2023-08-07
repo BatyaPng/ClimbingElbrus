@@ -1,3 +1,5 @@
+`include "BoothEncoder.v"
+
 `define DATA_WIDTH 6,
 `define NUM_TERMS $ceil((DATA_WIDTH + 3) / 3),
 `define CAPACITY_RESULT (DATA_WIDTH * 2 - 1) * NUM_TERMS
@@ -24,6 +26,15 @@ end
 
 initial begin
     $dumpvars;
+
+    $strobe("ir_result[0]  = %b", booth_encoder_inst.ir_result[0]);
+    $monitor("result[5:0]  = %b", result[5:0]);
+
+    $strobe("ir_result[1]   = %b", booth_encoder_inst.ir_result[1]);
+    $strobe("result[11:6]   = %b", result[11:6]);
+
+    $strobe("ir_result[2]    = %b", booth_encoder_inst.ir_result[2]);
+    $strobe("result[17:12]   = %b", result[17:12]);
 
     #10;
 
