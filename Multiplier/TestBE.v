@@ -9,7 +9,7 @@ reg clk = 0;
 
 reg [5:0] A;
 reg [5:0] B;
-wire [32:0] result;
+wire [35:0] result;
 
 booth_encoder #(6) booth_encoder_inst(.multiplicand(A),
                                               .multiplier(B),

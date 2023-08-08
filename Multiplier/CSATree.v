@@ -2,7 +2,7 @@
 
 module csa_tree
 #(
-    parameter DATA_WIDTH = 63,
+    parameter DATA_WIDTH = 64,
     parameter NUM_TERMS = 12,
     parameter CAPACITY_INPUT = DATA_WIDTH * NUM_TERMS,
     parameter CAPACITY_RESULT = 2 * DATA_WIDTH  

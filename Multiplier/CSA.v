@@ -1,6 +1,6 @@
 module csa 
 #(
-    parameter DATA_WIDTH = 63
+    parameter DATA_WIDTH = 64
 )
 (
     input [DATA_WIDTH - 1:0] num1, num2, num3,
