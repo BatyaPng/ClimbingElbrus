@@ -1,9 +1,10 @@
 module booth_encoder 
 #(
     parameter DATA_WIDTH = 32,
-    parameter PARITY = DATA_WIDTH % 2,
-    parameter NUM_TERMS = $ceil((DATA_WIDTH + 3) / 3),
-    parameter CAPACITY_RESULT = (DATA_WIDTH * 2 - 1) * NUM_TERMS
+    parameter PARITY = (DATA_WIDTH % 2) ? 0 : 1,
+    parameter DATA_WIDTH_TERMS = DATA_WIDTH * 2 - 1,
+    parameter NUM_TERMS = $ceil((PARITY + 1 + DATA_WIDTH + 1) / 3),
+    parameter CAPACITY_RESULT = DATA_WIDTH_TERMS * NUM_TERMS
 )
 (
     input [DATA_WIDTH - 1:0] multiplicand, multiplier, 
@@ -20,13 +21,13 @@ assign double_multiplicand = {multiplicand, 1'b0};
 wire [DATA_WIDTH:0] neg_double_multiplicand;
 assign neg_double_multiplicand = -double_multiplicand;
 
-wire [DATA_WIDTH + 1:0] ex_multiplier;
+wire [PARITY + 1 + DATA_WIDTH:0] ex_multiplier;
 assign ex_multiplier = (PARITY) ?  {2'b00, multiplier, 1'b0} : {1'b0, multiplier, 1'b0};
 
-wire [2 * DATA_WIDTH - 1:0] ir_result [NUM_TERMS - 1:0];
+wire [DATA_WIDTH_TERMS - 1:0] ir_result [NUM_TERMS - 1:0];
 
-genvar i;
 generate
+    genvar i;
     for (i = 0; i < NUM_TERMS; i = i +1) begin
         wire code;
         assign code = {ex_multiplier[2 * i + 2], ex_multiplier[2 * i + 1], ex_multiplier[2 * i]};
@@ -41,8 +42,8 @@ generate
     end
 endgenerate
 
-`define LSB x * (DATA_WIDTH * 2 - 1)
-`define MSB x * (DATA_WIDTH * 2 - 1) + (DATA_WIDTH * 2 - 1) - 1
+`define LSB x * DATA_WIDTH_TERMS
+`define MSB x * DATA_WIDTH_TERMS + DATA_WIDTH_TERMS - 1
 genvar x;
 generate
     for (x = 0; x < NUM_TERMS; x = x + 1) begin
