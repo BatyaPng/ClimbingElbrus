@@ -1,8 +1,7 @@
-`include "IsEven.v"
-
 module booth_encoder 
 #(
     parameter DATA_WIDTH = 32,
+    parameter PARITY = DATA_WIDTH % 2,
     parameter NUM_TERMS = $ceil((DATA_WIDTH + 3) / 3),
     parameter CAPACITY_RESULT = (DATA_WIDTH * 2 - 1) * NUM_TERMS
 )
@@ -21,21 +20,16 @@ assign double_multiplicand = {multiplicand, 1'b0};
 wire [DATA_WIDTH:0] neg_double_multiplicand;
 assign neg_double_multiplicand = -double_multiplicand;
 
-wire parity;
-is_even #(DATA_WIDTH) is_even_inst(.num(multiplier), 
-                     .parity(parity));
-
 wire [DATA_WIDTH + 1:0] ex_multiplier;
-assign ex_multiplier = (parity) ?  {2'b00, multiplier, 1'b0} : {1'b0, multiplier, 1'b0};
+assign ex_multiplier = (PARITY) ?  {2'b00, multiplier, 1'b0} : {1'b0, multiplier, 1'b0};
 
 wire [2 * DATA_WIDTH - 1:0] ir_result [NUM_TERMS - 1:0];
 
 genvar i;
-`define j 2 * i + 1
 generate
     for (i = 0; i < NUM_TERMS; i = i +1) begin
         wire code;
-        assign code = {ex_multiplier[`j + 1], ex_multiplier[`j], ex_multiplier[`j - 1]};
+        assign code = {ex_multiplier[2 * i + 2], ex_multiplier[2 * i + 1], ex_multiplier[2 * i]};
         
         assign ir_result[i] = (code == 3'b000 || code == 3'b111) ? 0                            :
                               (code == 3'b001 || code == 3'b010) ? multiplicand << i            :
@@ -47,14 +41,15 @@ generate
     end
 endgenerate
 
-
+`define LSB x * (DATA_WIDTH * 2 - 1)
+`define MSB x * (DATA_WIDTH * 2 - 1) + (DATA_WIDTH * 2 - 1) - 1
 genvar x;
-`define lsb x * (DATA_WIDTH * 2 - 1)
-`define msb x * (DATA_WIDTH * 2 - 1) + (DATA_WIDTH * 2 - 1) - 1
 generate
     for (x = 0; x < NUM_TERMS; x = x + 1) begin
-        assign result [`msb:`lsb] = ir_result[x];
+        assign result [`MSB:`LSB] = ir_result[x];
     end
 endgenerate
+`undef LSB
+`undef MSB
 
 endmodule

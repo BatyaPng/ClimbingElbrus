@@ -24,6 +24,8 @@ always begin
     #1 clk = ~clk;
 end
 
+   integer i;
+
 initial begin
     $dumpvars;
 
@@ -35,6 +37,11 @@ initial begin
 
     $strobe("ir_result[2]    = %b", booth_encoder_inst.ir_result[2]);
     $strobe("result[17:12]   = %b", result[17:12]);
+
+ 
+    for (i = 0; i < 3 ; i = i + 1) begin
+        $dumpvars(1, booth_encoder_inst.ir_result[i]);
+    end
 
     #10;
 
