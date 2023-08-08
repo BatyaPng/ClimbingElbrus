@@ -1,7 +1,11 @@
-module csa (
-    input [63:0] num1, num2, num3,
+module csa 
+#(
+    parameter DATA_WIDTH = 63
+)
+(
+    input [DATA_WIDTH - 1:0] num1, num2, num3,
 
-    output [63:0] ps, pc
+    output [DATA_WIDTH - 1:0] ps, pc
 );
 
 assign ps = num1 ^ num2 ^ num3;
