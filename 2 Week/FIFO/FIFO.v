@@ -29,24 +29,24 @@ end
 
 always @(posedge clk) begin
     if (reset) begin
-        tail <= 0;
+        tail <= 1;
     end else if (wr_en & wr_ready) begin
-        queue[tail + 1] <= wr_data;
+        queue[tail] <= wr_data;
         tail <= tail + 1;
     end
 end
 
 always @(posedge clk) begin
     if (reset) begin
-        state_system <= 1;
-    end else if (tail < head) begin
-        state_system <= 1;
-    end else if (head == tail & state_system == 1) begin
         state_system <= 0;
+    end else if (head == tail) begin
+        state_system <= 0;
+    end else if (head < tail & state_system == 0) begin
+        state_system <= 1;
     end
 end
 
-assign rd_val = state_system;
+assign rd_val = state_system | (((tail - head > 0) ? tail - head : head - tail) > 2);
 assign wr_ready = ((tail - head != FIFO_DEPTH - 1) & (tail - head != 1)) ? 1 : 0;
     
 endmodule
