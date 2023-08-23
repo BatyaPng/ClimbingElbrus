@@ -31,11 +31,7 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if (en) begin
-        val <= 1;
-    end else begin
-        val <= 0;
-    end
+    val <= en;
 end
 
 assign overflow = ~(res[63:32] == 33'b0);

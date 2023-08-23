@@ -30,7 +30,7 @@ generate
     genvar i;
     for (i = 0; i < NUM_TERMS; i = i +1) begin
         wire code;
-        assign code = {ex_multiplier[2 * i + 2], ex_multiplier[2 * i + 1], ex_multiplier[2 * i]};
+        assign code = ex_multiplier[2 * i + 2:2 * i];
         
         assign ir_result[i] = (code == 3'b000 || code == 3'b111) ? 0                            :
                               (code == 3'b001 || code == 3'b010) ? multiplicand << i            :
