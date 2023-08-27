@@ -16,7 +16,7 @@ wire overflow;
 
 
 
-muliplier multiplier_inst(.clk(clk), .en(en), 
+multiplier multiplier_inst(.clk(clk), .en(en), 
                           .op1(a), .op2(b), 
                           .res(res),
                           .val(val),

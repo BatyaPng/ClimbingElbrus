@@ -1,7 +1,7 @@
 `include "BoothEncoder.v"
 `include "CSATree.v"
 
-module muliplier (
+module multiplier (
     input clk, en,
     input [31:0] op1, op2,
 
