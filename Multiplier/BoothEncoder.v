@@ -3,7 +3,7 @@ module booth_encoder
     parameter DATA_WIDTH = 32,
     parameter PARITY = (DATA_WIDTH % 2) ? 0 : 1,
     parameter DATA_WIDTH_TERMS = DATA_WIDTH * 2,
-    parameter NUM_TERMS = 12,
+    parameter NUM_TERMS = $ceil((DATA_WIDTH + 2) / 2),
     parameter CAPACITY_RESULT = DATA_WIDTH_TERMS * NUM_TERMS
 )
 (
