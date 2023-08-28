@@ -1,21 +1,10 @@
 module exp_corr (
     input clk, reset,
-    input  [45:0] mant_mul,
+    input  [47:0] mant_mul,
     input  [7:0] exp_sum,
     output [7:0] exp_res
 );
 
-reg [7:0] count;
-
-wire [7:0] index;
-assign index = 45 - count;
-
-always @(posedge clk) begin
-    if (reset) begin
-        count <= 0;
-    end else if (mant_mul[index] == 0) begin
-        count <= count + 1;
-    end
-end
+assign exp_res = (mant_mul[47] == 1) ? exp_sum : exp_sum - 1;
 
 endmodule
